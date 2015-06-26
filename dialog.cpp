@@ -6,6 +6,7 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Mp3 player - Written by Nguyen Chiem Minh Vu");
     this->setMaximumSize(this->size());
     this->setMinimumSize(this->size());
 
