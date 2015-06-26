@@ -22,12 +22,11 @@ public:
 public slots:
     void calculatePercent(qint64 current);
     void receiptFile(QString file);
+    void showNameSong(QMediaContent);
 
 private slots:
     void on_pushButton_clicked();
-
     void on_pushButton_2_clicked();
-
     void on_pushButton_3_clicked();
 
 private:

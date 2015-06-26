@@ -22,3 +22,6 @@ HEADERS  += dialog.h \
 
 FORMS    += dialog.ui \
     getfile.ui
+
+RESOURCES += \
+    resource.qrc

@@ -9,6 +9,8 @@ Dialog::Dialog(QWidget *parent) :
 
     setUpPlayer();
 
+    ui->label->setText("");
+
     ui->progressBar->setValue(0);
     ui->verticalSlider->setMinimum(0);
     ui->verticalSlider->setMaximum(100);
@@ -34,6 +36,11 @@ void Dialog::receiptFile(QString file)
     player->play();
 }
 
+void Dialog::showNameSong(QMediaContent media)
+{
+    ui->label->setText(media.canonicalUrl().fileName());
+}
+
 void Dialog::setUpPlayer()
 {
     player = new QMediaPlayer(this);
@@ -44,6 +51,7 @@ void Dialog::setUpPlayer()
     connect(playlist,SIGNAL(loadFailed()),player,SLOT(stop()));
     connect(playlist,SIGNAL(loaded()),player,SLOT(play()));
     connect(playlist,SIGNAL(loadFailed()),playlist,SLOT(next()));
+    connect(playlist,SIGNAL(currentMediaChanged(QMediaContent)),this,SLOT(showNameSong(QMediaContent)));
 
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
