@@ -26,6 +26,14 @@ void Dialog::calculatePercent(qint64 current)
     ui->progressBar->setValue(current);
 }
 
+void Dialog::receiptFile(QString file)
+{
+    url = file;
+    playlist->addMedia(QUrl(url));
+
+    player->play();
+}
+
 void Dialog::setUpPlayer()
 {
     player = new QMediaPlayer(this);
@@ -37,8 +45,6 @@ void Dialog::setUpPlayer()
     connect(playlist,SIGNAL(loaded()),player,SLOT(play()));
     connect(playlist,SIGNAL(loadFailed()),playlist,SLOT(next()));
 
-    playlist->addMedia(QMediaContent(QUrl("http://dl2.hot2.cache11.vcdn.vn/fsdd1131lwwjA/63e671c0c4f05dbfb63bb9159f02f09b/558bb500/2011/07/12/f/6/f65a55bd3ec10ae688c48d97fe30792d.mp3?filename=Tam%20Anh%20Khong%20Hon%20-%20Quang%20Linh.mp3")));
-    playlist->addMedia(QMediaContent(QUrl("http://dl.mp3.zdn.vn/fsfsdfdsfdserwrwq3/67b4043de921b1616e4b3258089e74f3/558bb500/f/be/fbe57c39812b8cf07a0d8657142b4fde.mp3?filename=Mua%20Dem%20Tinh%20Nho%20-%20Quang%20Le.mp3")));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
     player->setPlaylist(playlist);
@@ -48,8 +54,11 @@ void Dialog::setUpPlayer()
 void Dialog::on_pushButton_clicked()
 {
     playlist->next();
-    if(playlist->currentMedia().isNull())
+    if(playlist->currentMedia().isNull())   {
+
+        playlist->removeMedia(playlist->currentIndex());
         playlist->next();
+    }
 }
 
 void Dialog::on_pushButton_2_clicked()
@@ -64,8 +73,7 @@ void Dialog::on_pushButton_2_clicked()
 
 void Dialog::on_pushButton_3_clicked()
 {
-    QString url = QInputDialog::getText(this,"get URL","URL: ");
-    playlist->addMedia(QUrl(url));
-
-    player->play();
+    getFile* openfile = new getFile(this);
+    connect(openfile,SIGNAL(getURL(QString)),this,SLOT(receiptFile(QString)));
+    openfile->exec();
 }

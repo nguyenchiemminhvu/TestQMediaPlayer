@@ -5,6 +5,7 @@
 #include <QInputDialog>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
+#include "getfile.h"
 
 namespace Ui {
 class Dialog;
@@ -20,6 +21,7 @@ public:
 
 public slots:
     void calculatePercent(qint64 current);
+    void receiptFile(QString file);
 
 private slots:
     void on_pushButton_clicked();
@@ -30,6 +32,7 @@ private slots:
 
 private:
     Ui::Dialog *ui;
+    QString url;
     QMediaPlayer* player;
     QMediaPlaylist* playlist;
 
