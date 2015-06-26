@@ -6,6 +6,8 @@ getFile::getFile(QWidget *parent) :
     ui(new Ui::getFile)
 {
     ui->setupUi(this);
+    this->setMaximumSize(this->size());
+    this->setMinimumSize(this->size());
 }
 
 getFile::~getFile()

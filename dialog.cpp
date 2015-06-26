@@ -6,7 +6,10 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+    this->setMaximumSize(this->size());
+    this->setMinimumSize(this->size());
 
+    setUpPlayButton();
     setUpPlayer();
 
     ui->label->setText("");
@@ -35,13 +38,26 @@ void Dialog::receiptFile(QStringList list_file)
         playlist->addMedia(QUrl(url));
     }
 
-
-    player->play();
+    play();
 }
 
 void Dialog::showNameSong(QMediaContent media)
 {
     ui->label->setText(media.canonicalUrl().fileName());
+}
+
+void Dialog::pause()
+{
+    isPlaying = false;
+    ui->pushButton_4->setIcon(QPixmap(":/images/play.png"));
+    player->pause();
+}
+
+void Dialog::play()
+{
+    isPlaying = true;
+    ui->pushButton_4->setIcon(QPixmap(":/images/pause.png"));
+    player->play();
 }
 
 void Dialog::setUpPlayer()
@@ -51,7 +67,6 @@ void Dialog::setUpPlayer()
     connect(player,SIGNAL(positionChanged(qint64)),this,SLOT(calculatePercent(qint64)));
 
     playlist = new QMediaPlaylist(this);
-    connect(playlist,SIGNAL(loadFailed()),player,SLOT(stop()));
     connect(playlist,SIGNAL(loaded()),player,SLOT(play()));
     connect(playlist,SIGNAL(loadFailed()),playlist,SLOT(next()));
     connect(playlist,SIGNAL(currentMediaChanged(QMediaContent)),this,SLOT(showNameSong(QMediaContent)));
@@ -60,6 +75,12 @@ void Dialog::setUpPlayer()
 
     player->setPlaylist(playlist);
     player->play();
+}
+
+void Dialog::setUpPlayButton()
+{
+    isPlaying = false;
+    ui->pushButton_4->setIcon(QPixmap(":/images/play.png"));
 }
 
 void Dialog::on_pushButton_clicked()
@@ -87,4 +108,16 @@ void Dialog::on_pushButton_3_clicked()
     getFile* openfile = new getFile(this);
     connect(openfile,SIGNAL(getURL(QStringList)),this,SLOT(receiptFile(QStringList)));
     openfile->exec();
+}
+
+void Dialog::on_pushButton_4_clicked()
+{
+    if(isPlaying)
+    {
+        pause();
+    }
+    else
+    {
+        play();
+    }
 }
