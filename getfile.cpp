@@ -28,9 +28,12 @@ void getFile::on_pushButton_3_clicked()
 
 void getFile::on_pushButton_clicked()
 {
+    ui->lineEdit->setEnabled(false);
     list_file = QFileDialog::getOpenFileNames(this,"Search file",QString(),"Music (*.mp3)");
     if(list_file.size() == 1)
         ui->lineEdit->setText(list_file.at(0));
+    else if(list_file.size() == 0)
+        ui->lineEdit->setText("Empty");
     else
-        ui->lineEdit->setText("We got a list of song");
+        ui->lineEdit->setText("Got a list of song");
 }

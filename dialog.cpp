@@ -33,6 +33,9 @@ void Dialog::calculatePercent(qint64 current)
 
 void Dialog::receiptFile(QStringList list_file)
 {
+    if(list_file.isEmpty())
+        return;
+
     foreach (QString url, list_file) {
 
         playlist->addMedia(QUrl(url));
