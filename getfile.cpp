@@ -20,12 +20,15 @@ void getFile::on_pushButton_4_clicked()
 
 void getFile::on_pushButton_3_clicked()
 {
-    emit getURL(ui->lineEdit->text());
+    emit getURL(list_file);
     this->close();
 }
 
 void getFile::on_pushButton_clicked()
 {
-    QString file = QFileDialog::getOpenFileName(this,"Search file",QString(),"Music (*.mp3)");
-    ui->lineEdit->setText(file);
+    list_file = QFileDialog::getOpenFileNames(this,"Search file",QString(),"Music (*.mp3)");
+    if(list_file.size() == 1)
+        ui->lineEdit->setText(list_file.at(0));
+    else
+        ui->lineEdit->setText("We got a list of song");
 }

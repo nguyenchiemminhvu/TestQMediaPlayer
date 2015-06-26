@@ -17,16 +17,16 @@ public:
     ~getFile();
 
 signals:
-    void getURL(QString);
+    void getURL(QStringList);
 
 private slots:
     void on_pushButton_4_clicked();
     void on_pushButton_3_clicked();
-
     void on_pushButton_clicked();
 
 private:
     Ui::getFile *ui;
+    QStringList list_file;
 };
 
 #endif // GETFILE_H

@@ -21,7 +21,7 @@ public:
 
 public slots:
     void calculatePercent(qint64 current);
-    void receiptFile(QString file);
+    void receiptFile(QStringList list_file);
     void showNameSong(QMediaContent);
 
 private slots:
@@ -31,7 +31,6 @@ private slots:
 
 private:
     Ui::Dialog *ui;
-    QString url;
     QMediaPlayer* player;
     QMediaPlaylist* playlist;
 

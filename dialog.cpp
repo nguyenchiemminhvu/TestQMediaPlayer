@@ -28,10 +28,13 @@ void Dialog::calculatePercent(qint64 current)
     ui->progressBar->setValue(current);
 }
 
-void Dialog::receiptFile(QString file)
+void Dialog::receiptFile(QStringList list_file)
 {
-    url = file;
-    playlist->addMedia(QUrl(url));
+    foreach (QString url, list_file) {
+
+        playlist->addMedia(QUrl(url));
+    }
+
 
     player->play();
 }
@@ -82,6 +85,6 @@ void Dialog::on_pushButton_2_clicked()
 void Dialog::on_pushButton_3_clicked()
 {
     getFile* openfile = new getFile(this);
-    connect(openfile,SIGNAL(getURL(QString)),this,SLOT(receiptFile(QString)));
+    connect(openfile,SIGNAL(getURL(QStringList)),this,SLOT(receiptFile(QStringList)));
     openfile->exec();
 }
